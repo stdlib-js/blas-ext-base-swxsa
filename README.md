@@ -53,32 +53,38 @@ This API is complementary to the package [`@stdlib/blas-ext/base/sxsa`][@stdlib/
 
 <!-- /.intro -->
 
-<section class="installation">
 
-## Installation
-
-```bash
-npm install @stdlib/blas-ext-base-swxsa
-```
-
-Alternatively,
-
--   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
--   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
--   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
-
-The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
-
-To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
-
-</section>
 
 <section class="usage">
 
 ## Usage
 
+To use in Observable,
+
 ```javascript
-var swxsa = require( '@stdlib/blas-ext-base-swxsa' );
+swxsa = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@umd/browser.js' )
+```
+
+To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
+
+```javascript
+var swxsa = require( 'path/to/vendor/umd/blas-ext-base-swxsa/index.js' )
+```
+
+To include the bundle in a webpage,
+
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@umd/browser.js"></script>
+```
+
+If no recognized module system is present, access bundle contents via the global scope:
+
+```html
+<script type="text/javascript">
+(function () {
+    window.swxsa;
+})();
+</script>
 ```
 
 #### swxsa( N, alpha, x, strideX, w, strideW )
@@ -184,9 +190,14 @@ swxsa.ndarray( 3, 5.0, x, 1, x.length-3, w, 1, w.length-3 );
 
 <!-- eslint no-undef: "error" -->
 
-```javascript
-var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
-var swxsa = require( '@stdlib/blas-ext-base-swxsa' );
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@umd/browser.js"></script>
+<script type="text/javascript">
+(function () {
 
 var x = discreteUniform( 10, -100, 100, {
     'dtype': 'float32'
@@ -200,6 +211,11 @@ console.log( w );
 
 swxsa( x.length, 5.0, x, 1, w, 1 );
 console.log( w );
+
+})();
+</script>
+</body>
+</html>
 ```
 
 </section>
@@ -208,135 +224,7 @@ console.log( w );
 
 <!-- C interface documentation. -->
 
-* * *
 
-<section class="c">
-
-## C APIs
-
-<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
-
-<section class="intro">
-
-</section>
-
-<!-- /.intro -->
-
-<!-- C usage documentation. -->
-
-<section class="usage">
-
-### Usage
-
-```c
-#include "stdlib/blas/ext/base/swxsa.h"
-```
-
-#### stdlib_strided_swxsa( N, alpha, \*X, strideX, \*W, strideW )
-
-Subtracts a scalar constant from each element in a single-precision floating-point strided array `X` and assigns the results to elements in a single-precision floating-point strided array `W`.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
-float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-stdlib_strided_swxsa( 4, 5.0f, x, 1, w, 1 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **alpha**: `[in] float` scalar constant.
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **W**: `[out] float*` output array.
--   **strideW**: `[in] CBLAS_INT` stride length for `W`.
-
-```c
-void stdlib_strided_swxsa( const CBLAS_INT N, const float alpha, const float *X, const CBLAS_INT strideX, float *W, const CBLAS_INT strideW );
-```
-
-<!-- lint disable maximum-heading-length -->
-
-#### stdlib_strided_swxsa_ndarray( N, alpha, \*X, strideX, offsetX, \*W, strideW, offsetW )
-
-<!-- lint enable maximum-heading-length -->
-
-Subtracts a scalar constant from each element in a single-precision floating-point strided array `X` and assigns the results to elements in a single-precision floating-point strided array `W` using alternative indexing semantics.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
-float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-stdlib_strided_swxsa_ndarray( 4, 5.0f, x, 1, 0, w, 1, 0 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **alpha**: `[in] float` scalar constant.
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
--   **W**: `[out] float*` output array.
--   **strideW**: `[in] CBLAS_INT` stride length for `W`.
--   **offsetW**: `[in] CBLAS_INT` starting index for `W`.
-
-```c
-void stdlib_strided_swxsa_ndarray( const CBLAS_INT N, const float alpha, const float *X, const CBLAS_INT strideX, const CBLAS_INT offsetX, float *W, const CBLAS_INT strideW, const CBLAS_INT offsetW );
-```
-
-</section>
-
-<!-- /.usage -->
-
-<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
-
-<section class="notes">
-
-</section>
-
-<!-- /.notes -->
-
-<!-- C API usage examples. -->
-
-<section class="examples">
-
-### Examples
-
-```c
-#include "stdlib/blas/ext/base/swxsa.h"
-#include <stdio.h>
-
-int main( void ) {
-    // Create strided arrays:
-    const float x[] = { 1.0f, -2.0f, 3.0f, -4.0f, 5.0f, -6.0f, 7.0f, -8.0f };
-    float w[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-
-    // Specify the number of indexed elements:
-    const int N = 8;
-
-    // Specify strides:
-    const int strideX = 1;
-    const int strideW = 1;
-
-    // Subtract a constant from each element in `x` and assign to `w`:
-    stdlib_strided_swxsa( N, 5.0f, x, strideX, w, strideW );
-
-    // Print the result:
-    for ( int i = 0; i < 8; i++ ) {
-        printf( "w[ %i ] = %f\n", i, w[ i ] );
-    }
-}
-```
-
-</section>
-
-<!-- /.examples -->
-
-</section>
-
-<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -418,9 +306,9 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/blas-ext-base-swxsa/main/LICENSE
 
-[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32
+[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32/tree/umd
 
-[@stdlib/blas/ext/base/sxsa]: https://github.com/stdlib-js/blas-ext-base-sxsa
+[@stdlib/blas/ext/base/sxsa]: https://github.com/stdlib-js/blas-ext-base-sxsa/tree/umd
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
