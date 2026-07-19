@@ -53,14 +53,32 @@ This API is complementary to the package [`@stdlib/blas-ext/base/sxsa`][@stdlib/
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-swxsa
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
 ```javascript
-import swxsa from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@deno/mod.js';
+var swxsa = require( '@stdlib/blas-ext-base-swxsa' );
 ```
 
 #### swxsa( N, alpha, x, strideX, w, strideW )
@@ -68,7 +86,7 @@ import swxsa from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@den
 Subtracts a scalar constant from each element in a single-precision floating-point strided array `x` and assigns the results to elements in a single-precision floating-point strided array `w`.
 
 ```javascript
-import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@deno/mod.js';
+var Float32Array = require( '@stdlib/array-float32' );
 
 var x = new Float32Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var w = new Float32Array( [ 0.0, 0.0, 0.0, 0.0, 0.0 ] );
@@ -89,7 +107,7 @@ The function has the following parameters:
 The `N` and stride parameters determine which elements in the strided arrays are accessed at runtime. For example, to subtract `alpha` from every other element in `x` and assign the results to every other element in `w`:
 
 ```javascript
-import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@deno/mod.js';
+var Float32Array = require( '@stdlib/array-float32' );
 
 var x = new Float32Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
 var w = new Float32Array( [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ] );
@@ -101,7 +119,7 @@ swxsa( 3, 5.0, x, 2, w, 2 );
 Note that indexing is relative to the first index. To introduce an offset, use [`typed array`][mdn-typed-array] views.
 
 ```javascript
-import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@deno/mod.js';
+var Float32Array = require( '@stdlib/array-float32' );
 
 // Initial arrays...
 var x0 = new Float32Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
@@ -120,7 +138,7 @@ swxsa( 3, 5.0, x1, 1, w1, 1 );
 Subtracts a scalar constant from each element in a single-precision floating-point strided array `x` and assigns the results to elements in a single-precision floating-point strided array `w` using alternative indexing semantics.
 
 ```javascript
-import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@deno/mod.js';
+var Float32Array = require( '@stdlib/array-float32' );
 
 var x = new Float32Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var w = new Float32Array( [ 0.0, 0.0, 0.0, 0.0, 0.0 ] );
@@ -137,7 +155,7 @@ The function has the following additional parameters:
 While [`typed array`][mdn-typed-array] views mandate a view offset based on the underlying buffer, the offset parameters support indexing semantics based on starting indices. For example, to subtract `alpha` from the last three elements of `x` and assign the results to the last three elements of `w`:
 
 ```javascript
-import Float32Array from 'https://cdn.jsdelivr.net/gh/stdlib-js/array-float32@deno/mod.js';
+var Float32Array = require( '@stdlib/array-float32' );
 
 var x = new Float32Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );
 var w = new Float32Array( [ 0.0, 0.0, 0.0, 0.0, 0.0 ] );
@@ -167,8 +185,8 @@ swxsa.ndarray( 3, 5.0, x, 1, x.length-3, w, 1, w.length-3 );
 <!-- eslint no-undef: "error" -->
 
 ```javascript
-import discreteUniform from 'https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@deno/mod.js';
-import swxsa from 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxsa@deno/mod.js';
+var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
+var swxsa = require( '@stdlib/blas-ext-base-swxsa' );
 
 var x = discreteUniform( 10, -100, 100, {
     'dtype': 'float32'
@@ -190,7 +208,135 @@ console.log( w );
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<!-- C usage documentation. -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/blas/ext/base/swxsa.h"
+```
+
+#### stdlib_strided_swxsa( N, alpha, \*X, strideX, \*W, strideW )
+
+Subtracts a scalar constant from each element in a single-precision floating-point strided array `X` and assigns the results to elements in a single-precision floating-point strided array `W`.
+
+```c
+const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
+float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+stdlib_strided_swxsa( 4, 5.0f, x, 1, w, 1 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] float` scalar constant.
+-   **X**: `[in] float*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **W**: `[out] float*` output array.
+-   **strideW**: `[in] CBLAS_INT` stride length for `W`.
+
+```c
+void stdlib_strided_swxsa( const CBLAS_INT N, const float alpha, const float *X, const CBLAS_INT strideX, float *W, const CBLAS_INT strideW );
+```
+
+<!-- lint disable maximum-heading-length -->
+
+#### stdlib_strided_swxsa_ndarray( N, alpha, \*X, strideX, offsetX, \*W, strideW, offsetW )
+
+<!-- lint enable maximum-heading-length -->
+
+Subtracts a scalar constant from each element in a single-precision floating-point strided array `X` and assigns the results to elements in a single-precision floating-point strided array `W` using alternative indexing semantics.
+
+```c
+const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
+float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+stdlib_strided_swxsa_ndarray( 4, 5.0f, x, 1, 0, w, 1, 0 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **alpha**: `[in] float` scalar constant.
+-   **X**: `[in] float*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length for `X`.
+-   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
+-   **W**: `[out] float*` output array.
+-   **strideW**: `[in] CBLAS_INT` stride length for `W`.
+-   **offsetW**: `[in] CBLAS_INT` starting index for `W`.
+
+```c
+void stdlib_strided_swxsa_ndarray( const CBLAS_INT N, const float alpha, const float *X, const CBLAS_INT strideX, const CBLAS_INT offsetX, float *W, const CBLAS_INT strideW, const CBLAS_INT offsetW );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<!-- C API usage examples. -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/blas/ext/base/swxsa.h"
+#include <stdio.h>
+
+int main( void ) {
+    // Create strided arrays:
+    const float x[] = { 1.0f, -2.0f, 3.0f, -4.0f, 5.0f, -6.0f, 7.0f, -8.0f };
+    float w[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+    // Specify the number of indexed elements:
+    const int N = 8;
+
+    // Specify strides:
+    const int strideX = 1;
+    const int strideW = 1;
+
+    // Subtract a constant from each element in `x` and assign to `w`:
+    stdlib_strided_swxsa( N, 5.0f, x, strideX, w, strideW );
+
+    // Print the result:
+    for ( int i = 0; i < 8; i++ ) {
+        printf( "w[ %i ] = %f\n", i, w[ i ] );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -209,7 +355,7 @@ console.log( w );
 
 ## Notice
 
-This package is part of [stdlib][stdlib], a standard library with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
 
 For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
 
@@ -272,9 +418,9 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/blas-ext-base-swxsa/main/LICENSE
 
-[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32/tree/deno
+[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32
 
-[@stdlib/blas/ext/base/sxsa]: https://github.com/stdlib-js/blas-ext-base-sxsa/tree/deno
+[@stdlib/blas/ext/base/sxsa]: https://github.com/stdlib-js/blas-ext-base-sxsa
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
